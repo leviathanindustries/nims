@@ -1,0 +1,71 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid">
+    <div class="row">
+      <div id="main" class="col-md-6">
+        <div id="loader">
+          
+        </div>
+        <canvas id="canv" style="width:100%;min-height:400px;margin-top:50px;outline:1px solid grey;">
+          
+        </canvas>
+      </div>
+      <div id="info" class="col-md-6" style="margin-top:50px;">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  jQuery(document).ready(function() {
+    
+    ctx = undefined;
+
+    if (window.location.href.indexOf('url=') !== -1) {
+      $('#info').html('<p>Loading...</p>');
+      var url = window.location.href.split('url=')[1];
+      var img = new Image;
+      img.onload = function() {
+        var m = 2; //$('#canv').width() / img.width;
+        //$('#canv').css('height',img.height*2+'px');
+        //$('#canv').css('width',img.width*2+'px');
+        ctx = document.getElementById('canv').getContext('2d');
+        ctx.drawImage(img, 0, 0, img.width*m, img.height*m);
+        $.ajax({
+          url: 'https://dev.api.cottagelabs.com/img?focuscrop=true&data=true&url=' + url,
+          success(data) {
+            console.log(data);
+            ctx.beginPath();
+            ctx.rect(data.focus.bx*m, data.focus.by*m, data.focus.bw*m, data.focus.bh*m);
+            //ctx.fillStyle = 'yellow';
+            //ctx.fill();
+            ctx.lineWidth = .5;
+            ctx.strokeStyle = 'red';
+            ctx.stroke();
+            var info = '<p>This image is ' + (data.landscape ? 'landscape' : 'portrait') + ' orientation and is mainly ' + (data.lightness > 50 ? 'light' : 'dark') + ' coloured.</p>';
+            info += '<p>The key area of the image is indicated by the red box.</p>';
+            info += '<p>The average shade of the image is <span style="color:' + data.avg.hex + '">' + data.avg.hex + '</span> and the main colours are:';
+            for (var c in data.colours) info += '<br><span style="color:' + data.colours[c].hex + '">' + data.colours[c].pc + '% ' + data.colours[c].hex + '</span>';
+            info += '</p>';
+            $('#info').html(info);
+          },
+          error: function(data) {
+            $('#info').html('<p>Error...</p>');
+          }
+        });
+      }
+      img.src = url;
+    } else {
+      $('#main').html('<p><input class="form-control" type="text" id="url" placeholder="Type an image URL then press enter"></p>');
+      $('#url').bind('keyup',function(event) {
+        var keycode = event.keyCode ? event.keyCode : event.which;
+        if (keycode == '13') {
+          window.location = window.location.href + '?url=' + $('#url').val();
+        }
+      });
+    }
+  });
+</script>
+
+

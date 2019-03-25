@@ -1,0 +1,42 @@
+<head>
+  <meta charset="utf-8">
+  <title>NIMS X</title>
+  <meta name="author" content="Cottage Labs">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <link href="/static/favicon.ico" rel="icon" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+<!--
+  <script type="text/javascript" src="//static.cottagelabs.com/jquery-1.10.2.min.js"></script>  
+  <script type="text/javascript" src="//static.cottagelabs.com/bootstrap-3.0.3/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//static.cottagelabs.com/bootstrap-3.0.3/css/bootstrap.min.css">
+-->
+
+  <script type="text/javascript" src="//static.cottagelabs.com/d3/d3.v4.min.js"></script>
+
+  <script type="text/javascript" src="/static/holder/jquery.holder.js"></script>
+  <script type="text/javascript" src="/static/holder/use/nims.js"></script>
+  <script type="text/javascript" src="/static/holder/display/filters.js"></script>
+  <script type="text/javascript" src="/static/holder/display/graph.js"></script>
+  <script type="text/javascript" src="/static/holder/display/sankey.js"></script>
+  <script type="text/javascript" src="/static/holder/display/line2.js"></script>
+  <script type="text/javascript" src="/static/holder/display/network.js"></script>
+
+  <script>
+  var api = '{{api}}';
+  noddy.service = '{{service}}';
+  noddy.debug = {{debug}};
+  noddy.api = '{{noddy_api}}';
+
+  jQuery(document).ready(function() {
+
+    $('body').css('min-height',$(window).height()+'px');
+
+  });
+  </script>
+</head>
+

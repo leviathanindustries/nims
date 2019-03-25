@@ -1,0 +1,66 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid" style="max-width:100%;">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+    
+    var sz = 10;
+
+    $.fn.holder.use.nims = {
+      url: "https://dev.api.cottagelabs.com/service/nims/pdf",
+      datatype: 'JSON',
+      pushstate: false,
+      display:['nims','filters','network'],
+      //sticky:true,
+      record:false,
+      size:30,
+      fields: ['keywords.exact','chemicals.exact','entities.person.value.exact',
+        'entities.organization.value.exact','entities.location.value.exact','terms._analysis_fields.exact',
+        'terms._characterization_methods.exact','terms._data_origins.exact',
+        'terms._material_types.exact','terms._properties_addressed.exact',
+        'terms._structural_features.exact','terms._samurai_names.exact',
+        'entities.location.knowledge.name.exact','entities.location.wikidata.label.exact','entities.location.categorise.title.exact',
+        'entities.organization.knowledge.name.exact','entities.organization.wikidata.label.exact','entities.organization.categorise.title.exact',
+        'entities.person.knowledge.name.exact','entities.person.wikidata.label.exact','entities.person.categorise.title.exact'
+      ],
+      aggregations: {
+        keywords: { terms: { field: "keywords.exact", size: sz } },
+        chemistry: { terms: { field: "chemicals.exact", size: sz } },
+        person: { terms: { field: "entities.person.value.exact", size: sz } },
+        organization: { terms: { field: "entities.organization.value.exact", size: sz } },
+        location: { terms: { field: "entities.location.value.exact", size: sz } },
+        nims_analysis_fields: { terms: { field: "terms._analysis_fields.exact", size: sz } },
+        nims_characterization_methods: { terms: { field: "terms._characterization_methods.exact", size: sz } },
+        nims_data_origins: { terms: { field: "terms._data_origins.exact", size: sz } },
+        nims_material_types: { terms: { field: "terms._material_types.exact", size: sz } },
+        nims_properties_addressed: { terms: { field: "terms._properties_addressed.exact", size: sz } },
+        nims_structural_features: { terms: { field: "terms._structural_features.exact", size: sz } },
+        nims_samurai_names: { terms: { field: "terms._samurai_names.exact", size: sz } },
+        location_google_knowledge: { terms: { field: "entities.location.knowledge.name.exact", size: sz } },
+        location_wikidata: { terms: { field: "entities.location.wikidata.label.exact", size: sz } },
+        location_categorised: { terms: { field: "entities.location.categorise.title.exact", size: sz } },
+        organization_google_knowledge: { terms: { field: "entities.organization.knowledge.name.exact", size: sz } },
+        organization_wikidata: { terms: { field: "entities.organization.wikidata.label.exact", size: sz } },
+        organization_categorised: { terms: { field: "entities.organization.categorise.title.exact", size: sz } },
+        person_google_knowledge: { terms: { field: "entities.person.knowledge.name.exact", size: sz } },
+        person_wikidata: { terms: { field: "entities.person.wikidata.label.exact", size: sz } },
+        person_categorised: { terms: { field: "entities.person.categorise.title.exact", size: sz } }
+      }
+    }
+
+    $('#holder').holder();
+
+  });
+</script>

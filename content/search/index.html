@@ -1,0 +1,58 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          <div class="holder sticker"></div>
+          <div class="holder default sticky" style="z-index:1000000;">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-default holder ui" style="background-color:white;">
+                  <div class="panel-heading" style="background-color:white;padding:0px;">
+                    <input type="text" class="form-control holder search suggest" do="add" placeholder="Type to suggest" style="font-size:1.6em;height:50px;">
+                    <div class="holder searches" style="margin-top:5px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="holder suggestions"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+
+    $.fn.holder.use.nims.url = "https://dev.api.cottagelabs.com/service/nims",
+
+    $.fn.holder.use.nims.display = ['nims'];
+    $.fn.holder.use.nims.size = 0;
+    $.fn.holder.use.nims.sticky = false;
+    $.fn.holder.use.nims.ui = false;
+    //$.fn.holder.use.nims.fields = [];
+    $.fn.holder.use.nims.facets = {
+      'Researcher (Japanese)': { terms: { field: "full_name.ja.exact", size: 100 } },
+      'Researcher (English)': { terms: { field: "full_name.en.exact", size: 100 } },
+      groups: { terms: { field: "groups.display_name.en.exact", size: 100 } },
+      groups_ja: { terms: { field: "groups.display_name.ja.exact", size: 100 } },
+      keywords: { terms: { field: "keywords.exact", size: 100 } },
+      journals: { terms: { field: "articles.journal.title.exact", size: 100 } },
+      ISSNs: { terms: { field: "articles.journal.issn.value.exact", size: 100 } },
+      articles: { terms: { field: "articles.title.en.exact", size: 100 } },
+      categories: { terms: { field: "articles.category.exact", size: 100 } }
+    };
+
+    $('#holder').holder();
+
+  });
+</script>

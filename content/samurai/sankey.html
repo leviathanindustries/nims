@@ -1,0 +1,41 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+
+    $.fn.holder.use.nims.url = "https://dev.api.cottagelabs.com/service/nims/samurai",
+
+    $.fn.holder.use.nims.display = ['nims','filters','sankey']//,'graph','network'];
+    $.fn.holder.display.sankey.titles = false;
+    $.fn.holder.use.nims.size = 10;
+    $.fn.holder.use.nims.sticky = false;
+    $.fn.holder.use.nims.fields = ['groups.display_name.en','articles.journal.title','articles.category','full_name.en','articles.authors.groups.display_name.en','keywords','articles.authors.full_name.en','_id'];
+    $.fn.holder.use.nims.facets = {
+      'Researcher (Japanese)': { terms: { field: "full_name.ja.exact", size: 100 } },
+      'Researcher (English)': { terms: { field: "full_name.en.exact", size: 100 } },
+      groups: { terms: { field: "groups.display_name.en.exact", size: 100 } },
+      groups_ja: { terms: { field: "groups.display_name.ja.exact", size: 100 } },
+      keywords: { terms: { field: "keywords.exact", size: 100 } },
+      journals: { terms: { field: "articles.journal.title.exact", size: 100 } },
+      ISSNs: { terms: { field: "articles.journal.issn.value.exact", size: 100 } },
+      articles: { terms: { field: "articles.title.en.exact", size: 100 } },
+      categories: { terms: { field: "articles.category.exact", size: 100 } }
+    };
+
+    $('#holder').holder();
+
+  });
+</script>

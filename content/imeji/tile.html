@@ -1,0 +1,61 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+    
+    var tile = function(e) {
+      if (e) e.preventDefault();
+      $(this).find('.img').removeClass('thumbnail');
+      var big = '<div class="row well" style="margin:0px 0px 20px 0px;padding:0px;"><div class="col-md-6" style="margin-left:-15px;">';
+      big += $(this).html();
+      big += '</div><div class="col-md-6">';
+      big += '<p style="padding:20px;">' + $(this).find('.img').attr('alt') + '</p>';
+      big += '<p style="padding:20px;"><a target="_blank" href="' + $(this).find('.img').attr('src') + '">' + $(this).find('.img').attr('src') + '</a><br><br>';
+      big += 'Collection: ' + $(this).find('.img').attr('collection') + '<br>';
+      big += '<a class="btn btn-primary processor" id="' + $(this).attr('href') + '" href="/imeji/analysis?url=' + $(this).find('.img').attr('src') + '">Analyse image</a>';
+      big += '</div></div>';
+      $(this).parent().removeClass('col-md-3').addClass('col-md-12').html(big);
+      $('.processor').bind('click',process);
+    }
+    $('#holder').on('click','.tiler',tile);
+
+    $.fn.holder.use.tile = {
+      url: "https://dev.api.cottagelabs.com/service/nims/imeji",
+      datatype: 'JSON',
+      pushstate: false,
+      sticky:true,
+      scroll:true,
+      size:20,
+      display:['tile','filters'],
+      fields: ['thumbnailImageUrl','text','_id','collection','phash'],
+      facets: {
+        keywords: { terms: { field: "keywords.exact", size: 100 } },
+        terms: { terms: { field: "chemicals.exact", size: 100 } },
+        collection: { terms: { field: "collection.exact", size: 100 } },
+        phash: { terms: { field: "phash.exact", size: 100 } },
+        creator: { terms: { field: "dcterms:creator.exact", size: 100 } }
+      }
+    };
+
+    $.fn.holder.use.tile.record = function(rec) {
+      $('.holder.results').css('border','none');
+      return '<div class="col-md-3"><a class="tiler" href="' + rec._id + '"><img collection="' + rec.collection + '" phash="' + rec.phash + '" class="img thumbnail" style="width:100%;" src="' + rec.thumbnailImageUrl + '" alt="' + rec.text + '" title="' + rec.text + '"></a></div>';
+    }
+
+    $('#holder').holder();
+
+    $('.holder.options').append('<div class="col-md-4"><a class="btn btn-primary btn-block" href="?sort=phash">Phash sort</a></div>');
+  });
+</script>

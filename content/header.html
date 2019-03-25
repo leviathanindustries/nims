@@ -1,0 +1,57 @@
+  <div id="topnav" class="navbar navbar-fixed-top">
+    <div class="navbar-header visible-xs" style="padding-top:10px;">
+      <a href="/" class="pull-left" style="color:#212f3f;margin-left:10px;" id="mobnavheader">NIMS X</a>
+      <button type="button" class="mobnavtoggle pull-right" style="z-index:1000000;padding-top:0px;border:none;background-color:transparent;margin-right:10px;">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav" id="oab_brand">
+        <li><a href="/" style="padding-top:16px;" class="crumbs">NIMS X</a></li>
+      </ul>
+      <ul class="nav navbar-nav pull-right" id="navopts">
+        <li>      
+          <button type="button" class="mobnavtoggle pull-right" style="z-index:1000000;padding-top:16px;border:none;background-color:transparent;margin-right:10px;">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="fa fa-bars"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="mobnav" class="container">
+    <div style="background-color:white;width:100%;height:100%;padding:5px;">
+      <div class="row">
+        <div class="col-md-12">
+          <p style="text-align:right;">
+            <a class="mobnavtoggle" href="#" style="color:#212f3f;margin-right:12px;margin-top:-2px;"><i style="color:#212f3f;" class="glyphicon glyphicon-remove"></i></a>
+          </p>
+          <p style="text-align:center;font-size:20px;"><a href="/">NIMS X</a><br>
+          <a href="/dataset">Dataset graph</a><br>
+          <a href="/dataset/csv">Dataset CSV charts</a><br>
+          <a href="/imeji/tile">Imeji tile</a><br>
+          <!--<a href="/pdf">PDF</a><br>
+          <a href="/pubman">Pubman</a><br>-->
+          <a href="/samurai/network">Samurai network</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    jQuery(document).ready(function() {
+      var paths = window.location.pathname.replace('/','').split('/')
+      for ( var p in paths ) {
+        if (paths[p]) $('.crumbs').append(' / <a href="' + window.location.href.split(paths[p])[0] + paths[p] + '">' + paths[p] + '</a>');
+      }
+      
+      var mobnav = function(event) {
+        event.preventDefault();
+        $('#mobnav').toggle();
+      }
+      $('.mobnavtoggle').bind('click',mobnav);
+    });
+  </script>

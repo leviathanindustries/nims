@@ -1,0 +1,70 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="jumbotron" style="background-color:#66bbff;">
+          <h1 style="color:white;font-size:54px;text-align:center;">NIMS X PDF</h1>
+        </div>
+  
+        <div class="well">
+          <ol>
+            <li>
+              Notes to go here
+            </li>
+          </ol>
+        </div>
+
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+    
+    var sz = 10;
+
+    $.fn.holder.use.nims = {
+      url: "https://dev.api.cottagelabs.com/service/nims/pdf",
+      datatype: 'JSON',
+      pushstate: false,
+      display:['nims','filters'],
+      sticky:true,
+      size:10,
+      fields: ['keywords.exact','chemicals.exact','entities.person.exact',
+        'entities.organization.exact','entities.location.exact','terms._analysis_fields.exact',
+        'terms._characterization_methods.exact','terms._data_origins.exact',
+        'terms._material_types.exact','terms._properties_addressed.exact',
+        'terms._structural_features.exact','terms._samurai_names.exact',
+        'entities.location.knowledge.name.exact','entities.location.wikidata.label.exact','entities.location.categorise.title.exact'
+      ],
+      facets: {
+        keywords: { terms: { field: "keywords.exact", size: sz } },
+        chemistry: { terms: { field: "chemicals.exact", size: sz } },
+        person: { terms: { field: "entities.person.exact", size: sz } },
+        organization: { terms: { field: "entities.organization.exact", size: sz } },
+        location: { terms: { field: "entities.location.exact", size: sz } },
+        nims_analysis_fields: { terms: { field: "terms._analysis_fields.exact", size: sz } },
+        nims_characterization_methods: { terms: { field: "terms._characterization_methods.exact", size: sz } },
+        nims_data_origins: { terms: { field: "terms._data_origins.exact", size: sz } },
+        nims_material_types: { terms: { field: "terms._material_types.exact", size: sz } },
+        nims_properties_addressed: { terms: { field: "terms._properties_addressed.exact", size: sz } },
+        nims_structural_features: { terms: { field: "terms._structural_features.exact", size: sz } },
+        nims_samurai_names: { terms: { field: "terms._samurai_names.exact", size: sz } },
+        location_google_knowledge: { terms: { field: "entities.location.knowledge.name.exact", size: sz } },
+        location_wikidata: { terms: { field: "entities.location.wikidata.label.exact", size: sz } },
+        location_categorised: { terms: { field: "entities.location.categorise.title.exact", size: sz } }
+      }
+    }
+
+    $('#holder').holder();
+
+  });
+</script>

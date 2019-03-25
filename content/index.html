@@ -1,0 +1,496 @@
+
+<div class="strap strap-compact">
+  <div class="jumbotron" style="background-color:#66bbff;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 style="color:white;font-size:54px;text-align:center;">NIMS experimental UI investigation</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  h2 {
+    margin-top:60px;
+  }  
+  h3 {
+    margin-top:40px;
+  }  
+  h4 {
+    margin-top:30px;
+  }  
+</style>
+
+<div class="strap strap-compact">
+  <div class="container-fluid" style="max-width:1000px;">
+    <div class="row">
+      <div class="col-md-3" style="position:sticky;top:60px;">
+        <div class="well" style="padding:0px;">
+          <ul class="nav" style="margin:0px;padding:0px;">
+            <li style="border-bottom:1px solid #ddd;"><a style="padding:4px 5px 1px 15px;" href="/">Introduction</a></li>
+            <li style="border-bottom:1px solid #ddd;"><a style="padding:4px 5px 1px 15px;" href="#data">Data</a></li>
+            
+            <li><a style="padding:4px 5px 1px 15px;" href="#methods">Methods</a></li>
+            <li><a style="padding:2px 5px 1px 35px;" href="#indexing">Full text indexing</a></li>
+            <li><a style="padding:2px 5px 1px 35px;" href="#tdm">Text and Data mining</a></li>
+            <li><a style="padding:2px 5px 1px 35px;" href="#nlp">Natural language processing</a></li>
+            <li><a style="padding:2px 5px 1px 35px;" href="#language">Language translation</a></li>
+            <li><a style="padding:2px 5px 1px 35px;" href="#ml">Machine learning</a></li>
+            <li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 35px;" href="#phash">Perceptual hashing</a></li>
+
+            <li><a style="padding:4px 5px 1px 15px;" href="#demos">Demonstrations</a></li>
+            
+            <li><a style="padding:2px 5px 1px 35px;" href="#dataset">Dataset</a></li>
+            <!--<li><a style="padding:2px 5px 1px 55px;" href="#dataset-csv">Dataset CSV</a></li>
+            <li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#dataset-graphs">Dataset graphs</a></li>-->
+            
+            <li><a style="padding:2px 5px 1px 35px;" href="#imeji">Imeji</a></li>
+            <!--<li><a style="padding:2px 5px 1px 55px;" href="#imeji-tiles">Imeji tiles</a></li>
+            <li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#imeji-analysis">Imeji analysis</a></li>-->
+            
+            <li><a style="padding:2px 5px 1px 35px;" href="#pdf">PDF</a></li>
+            <!--<li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#pdf-entities">PDF entities</a></li>-->
+            
+            <li><a style="padding:2px 5px 1px 35px;" href="#pubman">Pubman</a></li>
+            <!--<li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#pubman-graph">Pubman graphs</a></li>-->
+
+            <li><a style="padding:2px 5px 1px 35px;" href="#samurai">Samurai</a></li>
+            <!--<li><a style="padding:2px 5px 1px 55px;" href="#samurai-network">Samurai network</a></li>
+            <li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#samurai-graphs">Samurai graphs</a></li>-->
+
+            <li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 35px;" href="#search">Search / suggest</a></li>
+
+            <li><a style="padding:4px 5px 1px 15px;" href="#future">Future work</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-md-7" style="text-align:justify;">
+        
+        <p>NOTE: this document is now being heavily rewritten and reorganised for the NIMS presentation on 27th March 2019. 
+        Below content may not be in an order that makes sense... will update as soon as stable.</p>
+
+        <p>When data is collected from various different sources it allows us to 
+        explore relations between the datasets that would not have been possible from within just one of them. 
+        Also, we can explore it with different intentions to the original purpose. And of course, by collecting 
+        and storing the data we can ensure it remains available long term, and curate it to make it easier for 
+        others to explore and use. So what new and interesting things can we do with this resource?</p>
+        
+        <h3>Maintaining data over time</h3>
+        
+        <p>Hyrax is a good platform for receiving and storing research articles, data, and metadata. It also allows 
+        for curation, to ensure high quality metadata standards. Over time, this should 
+        provide an increasingly high quality source of data and metadata.</p>
+
+        <p>We also already have vocabulary lists, providing terms that researchers 
+        may be expected to use to describe their submissions. These can be used to improve curation and searchability 
+        of the submissions, and can also be used for keyword analysis and entity extraction.</p>
+        
+        <p>We would also want to export data, in batches to meet certain requirements, 
+        that could be created by queries of the Hyrax storage layer. With a suitable export mechanism and/or API, 
+        it would be possible to pipeline data into downstream TDM (and other) activities.</p>
+
+        <h3>Linking and enabling new discovery</h3>
+
+        <p>By analysing incoming data documents to generate metadata suggestions, 
+        we can help researchers submit their data and help curators to maintain it.</p>
+        
+        <p>Finding keywords and entities within the data, we can link the data 
+        to other sources to provide more information and context, such as Wikipedia, Wikidata, Google 
+        Knowledge Graph, and so on.</p>
+
+        <p>We can also expose previously unrecognised values and relations. For example, we can find entities not yet in our 
+        vocabularies, analyse images to learn more about them, visualise relations between entities, or develop a system to detect 
+        unusual results within submitted data.</p>
+
+
+
+        <h2>Data</h2>
+
+        <p>So far on the project we have worked with four kinds of data.</p>
+
+        <ul>
+          <li>Sample datasets (various XML, CSV, text, data, image files in ZIP)</li>
+          <li>Imeji metadata (XML)</li>
+          <li>Pubman metadata (XML)</li>
+          <li>Pubman articles (PDF)</li>
+        </ul>
+
+        <p>We also have NIMS vocabulary files for Hyrax, 
+        and I was also aware ofthe Samurai Researchers Directory Service API, so I used that as well:</p>
+
+        <ul>
+          <li>NIMS vocabulary files</li>
+          <li>Samurai metadata (JSON)</li>
+        </ul>
+        
+        <h3>Getting data from Hyrax</h3>
+
+        <p>Hyrax has a search endpoint, but by default it is restricted in what it delivers, althouth it can be configured 
+        and can provide JSON (by URL param format=json). It does not have a built-in export function or full 
+        API - there are some as add-ons, but to quite specific purposes. 
+        A Hyrax working group is currently reviewing export and API requirements, but it is in early stages.</p>
+        
+        <p>Due to these reasons and the other constraints on the project team to achieve the main requirements, I chose 
+        to process the data in a separate system, and to import the sample data from source rather than from Hyrax.</p>
+        
+        <h3>Processing XML</h3>
+
+        <p>The sample XML metadata format sometimes contains elements within elements in one file, whereas 
+          in other files those same parent elements contain strings. Such elements in the pubman metadata 
+          include abstract, alternative, and subject. This structure makes it harder to relate entities across 
+          metadata types.</p>
+
+        <p>The schema structure, both in the XML metadata and the Samurai JSON metadata, uses nesting 
+        methods that do not necessarily put the same entities in the same elements, or in the same places 
+        within element trees.</p>
+
+        <p>Metadata schemas and structures must to some extent be dictated by the preferences of the 
+        researchers submitting the data, and also by the requirements of Hyrax. So it may be that it will remain a better 
+        approach to export data from Hyrax for TDM work elsewhere, in which case we should focus on making data export a 
+        priority in future work.</p>
+        
+        <p>TODO link to a sample dataset xml file read from the API</p>
+        
+        <p>As I had decided to import all the data to an alternative system, I chose also to convert all the metadata to 
+        JSON and to flatten structures in some places, as it is easier to process and visualise that way. In general, a 
+        document-oriented approach is better for analysis because a relational approach requires dereferencing and 
+        flattening anyway. The presence of a relevant piece of text is often as useful as a reference to further metadata.</p>
+
+
+        <h3>Processing JSON</h3>
+        
+        <p>I retrieved Samurai metadata by iterating queries to the Samurai JSON API until I had 832 records. 
+        The API worked well, and the structure of the Samurai data is easier to use, although it does 
+        have a particular oddity of using objects with numbers for keys instead of just using lists. Presumably this is to 
+        overcome the fact that lists do not guarantee their order (although I have never actually seen one come out in a 
+        different order in real world usage). But it makes it more difficult to analyse the data as essentially every number 
+        key acts as another object type in the tree, meaning for example that the first author in an author list is in 
+        a parent object name "0", while the next is in "1", and so on. So these were flattened to normal lists.</p>
+
+        <h3>Processing CSV</h3>
+        
+        <p>Although the sample datasets contain raw experimental result data within CSV files in some cases, 
+        that CSV data does not necessarily conform to a standard CSV structure. To make better use of CSV files
+        in future, it would be good for them to have the following structure:</p>
+        
+        <ul>
+          <li>The sample files include comments in lines with a # - this is not technically allowed in CSV, but is 
+          a suitable way to provide metadata, and has been extracted in the above demonstrations. Future CSV datasets 
+          would need to adhere to this approach, if it is hoped to be used reliably in future work.</li>
+          <li>Ensure that data is arranged across rows, with column headers across a row as well. For example one sample dataset 
+          aligned the headers downwards in row 1, with the data downwards in row 2 - this breaks the expected 
+          data layout and is not possible to identify this difference so this CSV does not successfully parse.</li>
+          <li>Put column headers in the row preceding the data, ensuring there is a header for each row. Whilst the 
+          comments in the sample files do sometimes include key names for #dimension, #x, #y, etc, they do not do this 
+          in a way that reliably relates to the amount of rows in the data.</li>
+          <li>Ensure the data is separated out into rows and columns. One Sample dataset included all data points as one 
+          comma-separated list in one row, making it impossible to try to relate the data to the commented metadata 
+          in the file.</li>
+        </ul>
+        
+        <p>Examples can be found in the project repository, in 2019-01-31 sample dataset characterization samples. The most useful ones 
+        were titled primary.csv or id.csv, although there were others such as DataBase01.104.csv in the XPS_survey sample, 
+        HAADF.csv in the STEM sample, and MIDATA001.107.csv in the XPS_narrow sample. The Database01.104.csv file was usable 
+        as it had the same format as the id.csv file, but HAADF.csv had same comment style but all content in a single line, 
+        and MIDATA001.107.csv had 7 data columns but no way to identify column headers for more than two columns.</p>
+
+        <h3>Processing images</h3>
+        
+        <p>Images linked in metadata such as in Imeji or Samurai were not imported en masse, but were retrieved and 
+        analysed when necessary.</p>
+        
+        <h3>Processing PDF and text</h3>
+
+        <p>I tried processing Pubman PDFs directly. A subset of 500 was parsed to extract the text. 
+        No structure was required, just a simple extraction of all text present within the document. Images in PDFs 
+        could also be extracted, but this has not yet been done.</p>
+        
+        <p>The raw textual data in PDFs, or in metadata fields, is of course in many cases in Japanese. This was processed 
+        as found, and stored as utf-8 along with any other text. (Some translation attempts will be discussed in the 
+        following section).</p>
+
+        <a name="methods" id="methods"></a>
+
+
+
+        <h2>Methods</h2>
+
+        <h3>Full text indexing</h3>
+
+        <p>Although we have written importers to get this data into Hyrax, they necessarily handle the data 
+        with the needs of the Hyrax functionality in mind, and also the XML schemas are still changing, and 
+        Hyrax does not yet extract anything from PDFs. So it was necessary to write new importers for these 
+        datasets, which presented the opportunity to import it directly into a system more suitable for this 
+        investigative work. I therefore decided to convert metadata to JSON and extract text from PDF and other 
+        files wherever possible. JSON is better suited to browser-based user interfaces, and also suited to 
+        the backend storage system I used (details to follow).</p>
+        
+        <p>I often use Elasticsearch for data storage and analysis, and find it to be very flexible. It 
+        uses JSON by default which is very easy to use in browsers via javascript, and also in backend 
+        code written in node.js or python or many other languages. I already had an elasticsearch cluster 
+        running, and I also have some TDM software from previous work, which I could make quick use of by 
+        putting data into elasticsearch and building on my usual software stack.</p>
+        
+        <p>The functionality that I have developed for these demos is all accessible via the API that 
+        is written into the backend code, and the endpoints for that API will be documented here. 
+        For now, here are the query endpoints for every data type I created (but they are easier to 
+        explore via the UIs listed below):</p>
+        
+        <a name="tdm" id="tdm"></a>
+
+        <ul>
+          <li><a target="_blank" href="https://api.nims.test.cottagelabs.com">https://api.nims.test.cottagelabs.com</a></li>
+        </ul>
+        
+
+        <h3>Text and data mining</h3>
+
+        <p>The metadata for the sample datasets can be spread across more than one file, as can other useful 
+        information such as the comments on CSV data files included within the ZIP files. So I unpacked the ZIPs, 
+        traversed any contained structure, extracted and simplified the XML, and extracted any useuful comments. 
+        I then extracted all values in all keys of each record, and used them to create a text field somehwat 
+        like an abstract or keywords list.</p>
+        
+        <p>The three smallest of the four Pubman metadata XML files were processed and simplified as per the sample 
+        datasets XML, along with some additional simplification to keys: properties, relations, resources, components, 
+        md-records. This resulted in 1964 records which went through the same TDM processes as the sample datasets.</p>
+        
+        <p>Keyword extraction was a simple occurrence count, filtered with stopwords, and configured to provide 1 or 2 word n-gram length.</p>
+        
+        <p>Finally for the PDFs, I took the vocabulary files the project has already produced and used them as keyword 
+        lookups to automatically produce highly accurate keyword lists for each PDF. This is how we could automatically 
+        create metadata for submissions to the Hyrax system, and/or provide suggestions to users and curators. More on this in 
+        the demo description below.</p>
+
+        <p>I then also used the Samurai data to re-analyse the PDF metadata and to extract the names of any Samurai researchers 
+        that I could find in the PDFs. The Samurai data also already includes metadata about the publications of each 
+        researcher, and I was able to make an interesting visualisation out of this (see below).</p>
+
+        <a name="nlp" id="nlp"></a>
+        
+        <p>TODO describe hamming and levenshtein.</p>
+
+        <h3>Natural language processing</h3>
+        
+        <p>For chemical tagging I used the University of Cambridge Chemical Tagger text analysis tool, although I simplified 
+        the results to flatten them to a simpler keyword-style list. It is possible to do more with this tool, but unless 
+        the source text is restricted to abstracts, it can have a high false-positive rate.</p>
+
+        <p>I then went on to do some additional analysis wherever a good amount of text was available. Each text was sent to 
+        an instance of the Stanford CoreNLP server that I set up for the purpose, and it was used to perform entity 
+        extraction on each text. I also compared results to the Google natural language entity extraction API, achieving 
+        similar results. The Google API does have the advantage of automatically including links to Google Knowledge Graph 
+        and Wikidata where possible, however I was also able to replicate this by querying those APIs myself with suitable 
+        entity search terms, this building relations between the PDF articles and wikidata entries for entities that could be 
+        found. The accuracy of this could do with work, but some interesting results were found. See more info in the demo 
+        described below.</p>
+
+        <a name="language" id="language"></a>
+        
+        <h3>Language translation</h3>
+        
+        <p>I also attempted to translate any Japanese text in the datasets to English, to see how it fared. I used the Google natural
+        language translation API but results were poor, so I deleted the translations and disabled this process. Google 
+        translate is good for English-style characters, but not for Japanese characters. Short statements are OK, and the 
+        Googel translate web page does a good job with simple sentences, but for large chunks of academic text it was mostly 
+        nonsense. More on this later, in the PDF section below.</p>
+
+        <p>Before parsing, given the language translation issues noted above, I first checked the title of the available file 
+        to see if it ended in .pdf and if it appeared to be in English. To do this I used a node.js language detection library 
+        which was reliable on these small title texts. However some english-title PDFs still only contain Japanese characters, 
+        so these were filtered out also. So far I have successfully run 22 PDFs through this process and created records 
+        for them with a reasonable and understandable amount of text extracted.</p>
+        
+        <p>Regarding extracting text of different languages for analysys, Stanford CoreNLP handles various languages such as 
+        English and Chinese, but does not handle Japanese. It is possible to write langauge modules for this, but that would 
+        be future work.</p>
+
+        <a name="ml" id="ml"></a>
+
+        <p>(Note, of course, that some text extraction such as keywords can still be done on Japanese language anyway - I would just have a much 
+        harder time understanding if my results were accurate or not, hence why I focused on ones where I could extract English.)</p>
+        
+        <h3>Machine learning</h3>
+        
+        <a name="phash" id="phash"></a>
+
+        <p>TODO describe clustering k-means, mention neural network possibilities</p>
+        
+        <h3>Perceptual hashing</h3>
+        
+        <p>For Imeji I extracted data from the Imeji metadata XML file and processed it similarly to the sample 
+        datasets, and went through the same TDM processes.</p>
+
+        <p>In addition, I also calculated the perceptual hash of each image, which provides a way to estimate 
+        similarity between any image and others (the hash of one image can be compared with the hash of another using 
+        hamming or levenshtein distance - hamming works best in this case). There are also additional image analysis 
+        processes that can be run on each image to extract their colour signatures using k-means clustering, and to 
+        find the focal point of each image using recursive area analysis, and some other handy methods. See the 
+        Imeji demo info below.</p>
+
+        
+
+        <a name="demos" id="demos"></a>
+
+
+        <h2>Demonstrations</h2>
+
+        <a name="dataset" id="dataset"></a>
+
+        <p>Each data type was given a typical faceted search interface demonstrating the ability to extract content from 
+        various sources and present in a standard way with a search box and dropdowns to filter to specific 
+        records, showing that we could successfully extract text amd find terms and entities within the source data. 
+        However the display of results was customised in a range of ways, from simple text records to tiling images and 
+        interactive graphs.</p>
+
+
+        <h3>Dataset</h3>
+        
+        <ul>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/dataset">Dataset search</a></li>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/dataset/graph">Dataset graphs</a></li>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/dataset/csv">Dataset CSV charts</a></li>
+        </ul>
+
+        <p>Dataset results were displayed first as a normal search results page, with many of the deeply nested values available 
+        as filters, and then as graphs that can show relations within the data, such as the relation 
+        between specimens and analyses. Graph parameters can be customised and adjust depending on search criteria.</p>
+
+        <p>Any CSV found in dataset ZIPs were extracted, values mapped onto an x,y plane and visualised as a line graph. 
+        All data is shown on one chart, then search filters can be used to choose which to display, allowing visual comparison 
+        of different data sets.</p>
+
+        <a name="imeji" id="imeji"></a>
+        
+        <p>For example filtering title to "#3 Ni_3N" which will show two charts that 
+        map directly onto each other, and the filename filter shows that these are from 2 different files in the same dataset. 
+        This gives an easy way to verify where result sets are expected to be similar, or to see where they should be 
+        different but are not.</p>
+        
+        
+        <h3>Imeji</h3>
+
+        <ul>
+          <!--<li><a target="_blank" href="https://nims.test.cottagelabs.com/imeji">Imeji search</a></li>-->
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/imeji/tile">Imeji tile search</a></li>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/imeji/tile?sort=phash">Imeji pHash sort</a></li>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/imeji/analysis">Imeji analysis</a></li>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/imeji/analysis?url=http://imeji.nims.go.jp/imeji/file/8/b0/5a/ac/b0-72da-4a56-833a-15c403f1d344/0/thumbnail/b08e0dbe1c3e8dc7bdcdc8ca88623a1f.jpg">Imeji analysis pre-selected example</a></li>
+        </ul>
+
+        <p>For Imeji the standard search was customised to show results displayed as image tiles rather than text. 
+        Scrolling automatically loads more images. Clicking an image shows more metadata, and provides an "analyse image" option.</p>
+        
+        <p>Search bar dropdown options also give a unique pHash-sort ability. This displays images next to ones they are similar to, 
+        demonstrating that we can analyse raw images directly and find similar images in the dataset or in newly uploaded data, using 
+        perceptual hashes. This is different from just matching identical images, which can be simply done using checksums.</p>
+
+        <p>Selecting image analysis provides a page demonstrating some more extracted image data such as orientation, lightness/darkness, 
+        average shade, main colours, and a bounding box showing the key area of interest. (Note this does not yet work for the animated images.)</p>
+
+        <a name="pdf" id="pdf"></a>
+        
+        <p>Average and main colours are calculated using k-means clustering algorithm. The bounding box is calculated by a recursive 
+        algorithm comparing information about the variation of colours and intensity across the image, seeking the area that stands out the most.</p>
+        
+        
+        <h3>Pubman PDF</h3>
+
+        <a name="pubman" id="pubman"></a>
+        
+        <p>TODO still in progress, will show the extracted entities and links out to wikidata etc</p>
+        
+        
+        <h3>Pubman XML</h3>
+        
+        <a name="samurai" id="samurai"></a>
+
+        <p>TODO still in progress</p>
+        
+        
+        <h3>Samurai</h3>
+
+        <ul>
+          <!--<li><a target="_blank" href="https://nims.test.cottagelabs.com/samurai">Samurai search</a></li>-->
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/samurai/sankey">Samurai sankey</a></li>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/samurai/network">Samurai network</a></li>
+        </ul>
+
+        <p>This Samurai network graph demonstrates how we can use data visualisation to learn about interesting aspects of data that 
+        may not be obvious in other ways. By default this interactive network graph shows 100 researchers, linked to the research groups 
+        they belong to, but also linked to the research groups of every researcher they have co-authored a paper with. This quickly visually 
+        demonstrates which research groups are the most collaborative, and which researchers have done the most collaborating.</p>
+        
+        <p>This kind of interface is probably too complex to be used as a search interface, but it can be used to generate very useful visualisations. 
+        Hover the mouse pointer over any node to see the name of it, and also to declutter the links to only those related to the node in question. 
+        Click any node to add it to the search filter, or use the usual filters to do so. For example, filter by a group to see every 
+        researcher and all the groups that members of the chosen group have collaborated with. The usual search filters also have extra 
+        buttons to enable you to add that filter type as a node on the graph, and whether to link it or not, and how many of each node to show.</p>
+        
+        <p>Note there are 832 researchers in total, it is possible to show them all on screen at once, but the visualisation may become 
+        slow, depending on the power of your machine. To try this, type options.query.size:832 into the search bar and hit enter...</p>
+        
+
+        <a name="search" id="search"></a>
+
+        <p>It is notable how many links there are in this graph. NIMS researchers appear to be highly collaborative between research groups.</p>
+        
+
+        <h3>Advanced search / suggest</h3>
+        
+        <a name="future" id="future"></a>
+
+        <p>TODO still in progress</p>
+
+
+
+        <h2>Future work</h2>
+        
+        <h3>Use Hyrax to store more research data</h3>
+
+        <p>We were able to demonstrate text analysis of the available data, as well as showing ways to extract 
+        value such as keyword analysis and generation, and linking authors to articles, and discovering and 
+        linking entities between different datasets within the system and also to external datasests.</p>
+
+        <li>Develop an additional TDM process/pipeline that can analyse records submitted to the Hyrax system 
+        and extract value from them such as to produce metadata like keyword lists</li>
+        <li>Use the processes demonstrated here to improve the Hyrax user interface, such as suggestion boxes and dropdowns.</li>
+
+        <h3>Develop Hyrax so that it is more suited to extracting and/or querying data for TDM</h3>
+        
+        <p>At present it is quite a lot of work to get the data out of the Hyrax system or to get the raw data 
+        in a suitable state. We could not expect other people outside our project group to be willing to make 
+        such efforts, nor possibly to have the access rights necessary for such detailed work on the raw data.</p>
+        
+        <p>So developing a configurable exporter or query API for Hyrax is the most important 
+        issue to consider next, and would be the best candidate for future work, from the perspective of TDM.</p>
+        
+        <h3>CSV recommendations</h3>
+        
+        <h3>More possibilities</h3>
+
+        <ul>
+          <li>Develop an additional system, such as that used in this investigation, 
+          to stand alongside hyrax that can present the exported data for TDM purposes</li>
+          <li>Connect Hyrax via an exporter or an API to the NIMS TDM research team tools (whatever they may be - I do not know yet)</li>
+          <li>Gain more context and understanding of the data that will be included in real datasets submitted to the system, and use them 
+          to train more complex machine learning approaches to identify data features (likely to only be possible once the system has been 
+          running for a while and has more real world data in it).</li>
+          <li>Write a Japanese language module for Stanford CoreNLP, or find/develop an improved Japanese translation software (these could be hard).</li>
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+
+  });
+</script>
+

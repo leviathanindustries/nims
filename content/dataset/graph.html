@@ -1,0 +1,54 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+
+    var sz = 100;
+    
+    $.fn.holder.use.nims = {
+      url: "https://dev.api.cottagelabs.com/service/nims/dataset",
+      datatype: 'JSON',
+      pushstate: false,
+      display:['nims','filters','graph','sankey'],
+      sticky:true,
+      record:false,
+      size:20,
+      fields: ["domain-specific-term.specimen-types.type.general-name.exact","domain-specific-term.characterization-methods.method.measurement-execution.methods-category.analysis-field-items.exact"],
+      facets: {
+        Materials: { terms: { field: "domain-specific-term.specimen-types.type.material-type.material-type.exact", size: 100 } },
+        Specimens: { terms: { field: "domain-specific-term.specimen-types.type.general-name.exact", size: 100 } },
+        'Cas number': { terms: { field: "domain-specific-term.specimen-types.type.chemical-composition.chemical-composition-identifier.cas-number.exact", size: 100 } },
+        'Method category': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.method-category.exact", size: 100 } },
+        'Method subcategory': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.method-subcategory.exact", size: 100 } },
+        'Measurement environment': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.measurement-environment.exact", size: 100 } },
+        'Energy level transition structure': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.energy-level-transition-structure.exact", size: 100 } },
+        'Analysis field items': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.analysis-field-items.exact", size: 100 } },
+        'Chemistry terms': { terms: { field: "chemicals.exact", size: 100 } },
+        nims_analysis_fields: { terms: { field: "terms._analysis_fields.exact", size: sz } },
+        nims_characterization_methods: { terms: { field: "terms._characterization_methods.exact", size: sz } },
+        nims_data_origins: { terms: { field: "terms._data_origins.exact", size: sz } },
+        nims_material_types: { terms: { field: "terms._material_types.exact", size: sz } },
+        nims_properties_addressed: { terms: { field: "terms._properties_addressed.exact", size: sz } },
+        nims_structural_features: { terms: { field: "terms._structural_features.exact", size: sz } },
+        nims_samurai_names: { terms: { field: "terms._samurai_names.exact", size: sz } }
+
+      }
+    }
+
+    $('#holder').holder();
+
+  });
+</script>

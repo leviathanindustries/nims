@@ -1,0 +1,23 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+
+    $.fn.holder.use.nims.url = "https://dev.api.cottagelabs.com/service/nims/imeji",
+    $('#holder').holder();
+
+  });
+</script>

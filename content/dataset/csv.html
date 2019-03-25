@@ -1,0 +1,104 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid" style="max-width:100%;">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+
+    $.fn.holder.display.line.data = function(records) {
+      var datas = [];
+      for ( var r in records ) {
+        if (records[r].csv) {
+          for ( var c in records[r].csv ) {
+            try {
+              var data = [];
+              for ( var d in records[r].csv[c].data) {
+                data.push({legend: records[r].csv[c].legend, key: records[r].csv[c].title, x: records[r].csv[c].data[d][records[r].csv[c].keys[0]]*1, y: records[r].csv[c].data[d][records[r].csv[c].keys[1]]*1 })
+              }
+              datas.push(data)
+            } catch(err) {}
+          }
+        }
+      }
+      return datas;
+    }
+
+    var sz = 100;
+    
+    $.fn.holder.use.nims = {
+      url: "https://dev.api.cottagelabs.com/service/nims/dataset",
+      datatype: 'JSON',
+      pushstate: false,
+      display:['nims','filters','line'],
+      sticky:true,
+      record:false,
+      size:10,
+      defaultquery: {
+        query: {
+          filtered: {
+            query: {
+              bool: {
+                must: [
+                ]
+              }
+            },
+            filter: {
+              bool: {
+                must:[
+                  {
+                    query: {
+                      query_string: {
+                        query: 'csv.file:*'
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      aggregations: {
+        dataset: {terms: {field: 'name.exact', size: 100}},
+        'CSV comments': {terms: {field: 'csv.comments.exact', size: 100}},
+        'CSV filenames': {terms: {field: 'csv.file.exact', size:100}},
+        'CSV title': {terms: {field: 'csv.title.exact', size:100}},
+        'CSV legend': {terms: {field: 'csv.legend.exact', size:100}},
+        'CSV keys': {terms: {field: 'csv.keys.exact', size:100}},
+
+        Materials: { terms: { field: "domain-specific-term.specimen-types.type.material-type.material-type.exact", size: 100 } },
+        Specimens: { terms: { field: "domain-specific-term.specimen-types.type.general-name.exact", size: 100 } },
+        'Cas number': { terms: { field: "domain-specific-term.specimen-types.type.chemical-composition.chemical-composition-identifier.cas-number.exact", size: 100 } },
+        'Method category': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.method-category.exact", size: 100 } },
+        'Method subcategory': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.method-subcategory.exact", size: 100 } },
+        'Measurement environment': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.measurement-environment.exact", size: 100 } },
+        'Energy level transition structure': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.energy-level-transition-structure.exact", size: 100 } },
+        'Analysis field items': { terms: { field: "domain-specific-term.characterization-methods.method.measurement-execution.methods-category.analysis-field-items.exact", size: 100 } },
+        'Chemistry terms': { terms: { field: "chemicals.exact", size: 100 } },
+
+        nims_analysis_fields: { terms: { field: "terms._analysis_fields.exact", size: sz } },
+        nims_characterization_methods: { terms: { field: "terms._characterization_methods.exact", size: sz } },
+        nims_data_origins: { terms: { field: "terms._data_origins.exact", size: sz } },
+        nims_material_types: { terms: { field: "terms._material_types.exact", size: sz } },
+        nims_properties_addressed: { terms: { field: "terms._properties_addressed.exact", size: sz } },
+        nims_structural_features: { terms: { field: "terms._structural_features.exact", size: sz } },
+        nims_samurai_names: { terms: { field: "terms._samurai_names.exact", size: sz } }
+
+      }
+    }
+
+    $('#holder').holder();
+
+  });
+</script>

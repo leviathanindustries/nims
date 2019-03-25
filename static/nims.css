@@ -1,0 +1,230 @@
+
+html, body{
+  margin:0;
+  padding:0;
+  font-size:1em;
+  font-family: 'Roboto', sans-serif;
+  color:#212f3f;
+}
+
+html {
+  background-color:#212f3f;
+}
+body {
+  margin-top:50px;
+  background-color:#f8fafd;
+  min-height:800px;
+  color:#666;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', serif;
+}
+
+#topnav{
+  background-color:#f8fafd;
+}
+
+hr{
+  border-color:#212f3f;
+}
+
+.container-fluid {
+  margin:0 auto 0 auto;
+  padding-left:15px;
+  padding-right:15px;
+  max-width:1200px;
+}
+
+.navbar-alert{
+  height:35px;
+  text-align:center;
+  vertical-align:middle;
+}
+.p-alert{
+  padding-top:3px;
+}
+
+.row{
+  padding-top:10px;
+  padding-bottom:20px;
+}
+
+.navbar-nav li > a{
+  font-weight:bold;
+  font-size:1.2em;
+  color:black;
+  height:51px;
+  padding:13px 10px 13px 10px;
+}
+.navbar-nav li > a:hover{
+  color:#212f3f;
+}
+.navbar-nav li.active{
+  color:#212f3f;
+}
+.btn-action{
+  background-color:#398bc5;
+  color:white;
+}
+.btn-action:hover{
+  color:#212f3f;
+}
+.jumbotron{
+  background-color:#212f3f;
+  color:white;
+}
+
+.alert-action{
+  background-color:#398bc5;
+  color:white;
+}
+
+.strap{
+  padding-top:40px;
+  padding-bottom:40px;
+  min-height:400px;
+  margin:-10px 0 0 0;
+}
+.strap-compact{
+  min-height:10px;
+  padding-top:2px;
+  padding-bottom:2px;
+}
+.strap-action{
+  background-color:#f04717;
+}
+.strap-action a{
+  color:#212f3f;
+}
+.action{
+  color:#f04717;
+}
+.strap-white{
+  background-color:#fff;
+}
+
+
+/* CAROUSEL */
+/*.carousel {
+  height: 400px;
+  margin-bottom: 60px;
+}
+.carousel-caption {
+  z-index: 10;
+}
+.carousel .item {
+  height: 400px;
+  background-color: transparent;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 400px;
+}
+.carousel-indicators li{
+  background-color:white;
+  border-color:#212f3f;
+}
+.carousel-indicators li.active{
+  background-color:#f04717;
+  border-color:transparent;
+}*/
+
+
+/* MAP STUFF */
+.country{
+  stroke: #fff;
+  stroke-width: 0.8px;
+}
+.country:hover{
+  stroke: #333;
+  stroke-width: 0.8px;
+}
+.text{
+  font-size:1px;
+  text-transform:capitalize;
+}
+div.tooltip {
+  color: #222;
+  background: #fff;
+  padding: .5em;
+  text-shadow: #f5f5f5 0 1px 0;
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px 0px #a6a6a6;
+  opacity: 0.9;
+  position: absolute;
+}
+
+
+/* mobile nav */
+#mobnav {
+  display:none;
+  width:100%;
+  height:100%;
+  margin:0;
+  padding:5px;
+  position:fixed;
+  top:0;
+  left:1200;
+  z-index:100000000000;
+  background-color:#212f3f;
+}
+#mobnav h2 {
+  padding-bottom:5px;
+  border-bottom:1px solid #212f3f;
+}
+#mobnav h2 a {
+  color:#398bc5;
+}
+
+
+
+
+/* this is necessary to make sankey flows work - link means the flow links between the bars. 
+change this to a more suitable name and decide how displays should include css and other things 
+like custom data cleaning */
+.link {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .2;
+  cursor:pointer;
+}
+.link:hover {
+  stroke-opacity: .5;
+}
+
+/* this is necessary for maps */
+.subunit { 
+  fill: #eee; 
+}
+.subunit-boundary {
+  fill: none;
+  stroke:#66bbff;
+  stroke-width:0.3px;
+  stroke-dasharray: 2,2;
+  stroke-linejoin: round;
+}
+.subunit-label {
+  fill: #333;
+  fill-opacity: .5;
+  font-size: 2px;
+  font-weight: 300;
+  text-anchor: middle;
+}
+.circle-label {
+  fill: red;
+  fill-opacity: .5;
+  font-size: 1px;
+  font-weight: 300;
+  text-anchor: middle;
+}
+svg .circle{
+    fill: none;
+    stroke:red;
+    stroke-width: 0.8px;
+    cursor: pointer;
+}
+
