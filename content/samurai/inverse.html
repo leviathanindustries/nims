@@ -1,0 +1,48 @@
+
+<div class="strap strap-compact">
+  <div class="container-fluid" style="max-width:100%;">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="holder">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  jQuery(document).ready(function() {
+    //noddy.login();
+
+    // TODO run a query that for a given researcher gets every other researcher/journal/group 
+    // that the given researcher has NOT yet published with, but where those others HAVE 
+    // published with someone/some group/in some journal/on some keyword that the given 
+    // researcher has also published with
+
+    var sz = 100;
+    $.fn.holder.use.nims.url = "https://dev.api.cottagelabs.com/service/nims/samurai",
+
+    $.fn.holder.use.nims.display = ['nims','filters','network'];
+    $.fn.holder.use.nims.size = 100;
+    $.fn.holder.use.nims.sticky = false;
+    $.fn.holder.use.nims.fields = ['full_name.en.exact','articles.authors.groups.display_name.en.exact','groups.display_name.en.exact','_id.exact'];
+    $.fn.holder.use.nims.facets = undefined;
+    $.fn.holder.use.nims.aggregations = {
+      researcher: { terms: { field: "full_name.en.exact", size: sz } },
+      groups: { terms: { field: "groups.display_name.en.exact", size: sz } },
+      //keywords: { terms: { field: "keywords.exact", size: sz } },
+      //journals: { terms: { field: "articles.journal.title.exact", size: sz } },
+      'collaborating_group': { terms: { field: "articles.authors.groups.display_name.en.exact", size: sz } } //,
+      //articles: { terms: { field: "articles.title.en.exact", size: sz } },
+      //categories: { terms: { field: "articles.category.exact", size: sz } }
+    };
+
+    $.fn.holder.display.network.recordValue = 'full_name.en.exact'
+    $.fn.holder.display.network.show = ['collaborating_group','groups']
+    $.fn.holder.display.network.connect = ['collaborating_group','groups']
+    $('#holder').holder();
+
+  });
+</script>

@@ -13,13 +13,13 @@ nims_pdf = new API.collection index: API.settings.es.index + "_nims", type:"pdf"
 
 samurai_person = new API.collection index: API.settings.es.index + "_nims_samurai", type:"person"
 
-API.add 'service/nims', 
-  get: () -> 
+API.add 'service/nims',
+  get: () ->
     q = API.collection._translate this.queryParams
     res = API.es.call 'POST', API.settings.es.index + '_nims,' + API.settings.es.index + '_nims_samurai/_search', q
     res.q = q if API.settings.dev
     return res
-  post: () -> 
+  post: () ->
     q = API.collection._translate this.bodyParams
     res = API.es.call 'POST', API.settings.es.index + '_nims,' + API.settings.es.index + '_nims_samurai/_search', q
     res.q = q if API.settings.dev
@@ -54,8 +54,8 @@ API.add 'service/nims/read/csv', get: () -> return API.service.nims.read.csv thi
 
 API.add 'service/nims/image/analyse/:id', get: () -> return API.service.nims.analyse(this.urlParams.id)
 
+API.add 'service/nims/look/:ft', get: () -> return API.service.nims.look(this.urlParams.type, this.queryParams.raw?)
 API.add 'service/nims/phash', get: () -> return API.service.nims.phash()
-API.add 'service/nims/look', get: () -> return API.service.nims.look()
 API.add 'service/nims/xml', get: () -> return {statusCode: 200, headers: {'content-type':'application/xml; charset=UTF-8'}, body: fs.readFileSync('/home/cloo/nims-ngdr-development-2018/Sample_Datasets/2019-01-31/characterization/AES-narrow/api-fwk_depositUploadReq.xml').toString()}
 API.add 'service/nims/bulk', get: () -> return API.service.nims.bulk this.queryParams.types, not this.queryParams.remove?
 API.add 'service/nims/pdfs', get: () -> return API.service.nims.read.pdfs()
@@ -77,7 +77,7 @@ API.service.nims.analyse = (id) ->
   rec = nims_imeji.get id
   img = rec.thumbnailImageUrl
   return {}
-  
+
 API.service.nims.samurai = {}
 API.service.nims.samurai.search = (q='',page) ->
   try
@@ -190,7 +190,7 @@ API.service.nims.phash = () ->
       nims_imeji.update(rec._id, {phash: phash}) if phash
     done += 1
   return done
-  
+
 API.service.nims.read = {}
 API.service.nims.read.imeji = (raw=false,tdm=true) ->
   # can read imeji from /home/cloo/nims-ngdr-development-2018/Metadata/imeji/metadata_xml
@@ -230,7 +230,7 @@ API.service.nims.read.imeji = (raw=false,tdm=true) ->
       recs.push res[r]
       console.log recs.length + ' imeji'
   return recs
-  
+
 API.service.nims.read._dataset = (dir,rec={},raw=false) ->
   dir ?= '/home/cloo/nims-ngdr-development-2018/Sample_Datasets/2019-01-31/characterization/AES-survey'
   rec.dir ?= dir
@@ -292,7 +292,7 @@ API.service.nims.read._dataset = (dir,rec={},raw=false) ->
             #rec.parsed.push df
             #rec.attachment = fs.readFileSync file # check how to read the file into the index
   return rec
-  
+
 API.service.nims.read.dataset = (raw=false,tdm=true) ->
   #dir ?= '/home/cloo/nims-ngdr-development-2018/Sample_Datasets/2019-01-31/characterization/AES-survey' # can also do specimen
   folders = [
@@ -345,7 +345,7 @@ API.service.nims.read.csv = (fn) ->
       rs = {}
       try rs[lp[0].trim()] = lp[1].trim().toString()
       rec.data.push(rs) if not _.isEmpty rs
-    return rec    
+    return rec
   else if fn.indexOf('id.') isnt -1 or fn.indexOf('DataBase01.') isnt -1
     # there is also one at characterization/XPS_survey/DataBase01.104/DataBase01.104/DataBase01.104/DataBase01.104.csv
     # which is the same, but no way to know from the name
@@ -500,7 +500,7 @@ API.service.nims.tdm = (rec, google=false) ->
                     if wikidata?
                       rec.wikidata ?= []
                       try rec.wikidata.push wikidata
-  
+
   try rec.entities = API.tdm.entities rec.translated ? rec.text ? txts
   if rec.entities?
     try delete rec.entities.other
@@ -529,13 +529,13 @@ API.service.nims.tdm = (rec, google=false) ->
   try rec.terms = API.service.nims.terms rec.translated ? rec.text ? txts
 
   try rec.chemicals = API.use.chemicaltagger (rec.translated ? rec.text ? txts), {types: 'NounPhrase'}
-  
+
   #try delete rec.text
   try delete rec.translated
   #try delete rec.txts
   try delete rec.language
   return rec
-  
+
 API.service.nims.bulk = (types=['dataset','imeji','pubman'], remove=true) ->
   #return false
 
@@ -545,9 +545,9 @@ API.service.nims.bulk = (types=['dataset','imeji','pubman'], remove=true) ->
   #types = ['pubman']
   #types = ['pdf']
   #remove = false
-  
+
   status = {total: 0, errors: 0}
-  
+
   if 'dataset' in types
     datasets = []
     datasets = API.service.nims.read.dataset()
@@ -600,9 +600,16 @@ API.service.nims.bulk = (types=['dataset','imeji','pubman'], remove=true) ->
   API.mail.send to: 'alert@cottagelabs.com', subject: 'NIMS import ' + status.total + ' error ' + status.errors, text: JSON.stringify(status, "", 2)
   return status
 
-API.service.nims.look = (file) ->
-  file ?= '/home/cloo/nims-ngdr-development-2018/Sample_Datasets/2019-01-31/characterization/AES-survey/data062.A/primary.csv'
-  return if file.indexOf('.csv') isnt -1 then API.convert.csv2json(fs.readFileSync(file)) else if file.indexOf('.xml') isnt -1 then API.convert.xml2json(fs.readFileSync(file)) else ''
+API.service.nims.look = (file='csv', raw) ->
+  file = '/home/cloo/nims-ngdr-development-2018/Sample_Datasets/2019-01-31/characterization/AES-survey/data062.A/primary.csv' if file is 'csv'
+  txt = fs.readFileSync file
+  if raw
+    return
+      statusCode: 200,
+      headers: {'content-type':(if file.indexOf('.csv') isnt -1 then 'text/plain' else 'application/xml') + '; charset=UTF-8'},
+      body: txt.toString()
+  else
+    return if file.indexOf('.csv') isnt -1 then API.convert.csv2json(txt) else if file.indexOf('.xml') isnt -1 then API.convert.xml2json(txt) else ''
 
 API.service.nims.clear = () ->
   return false
