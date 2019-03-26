@@ -25,6 +25,39 @@ API.add 'service/nims',
     res.q = q if API.settings.dev
     return res
 
+API.add 'service/nims/suggest',
+  get: () ->
+    q = API.collection._translate this.queryParams
+    res = API.es.call 'POST', API.settings.es.index + '_nims,' + API.settings.es.index + '_nims_samurai/_search', q
+    starts = []
+    suggestions = []
+    try m = this.queryParams.q
+    try m ?= q.query.filtered.query.bool.must[0]['query_string'].query
+    m ?= ''
+    m = m.replace(/\*/g,'').replace(/~/g,'')
+    for rec in res.hits.hits
+      try delete rec.txts
+      vals = API.convert.json2txt rec, {list: true}
+      for v in vals
+        if v and typeof v is 'string' and v.indexOf(m) isnt -1 and v.indexOf('http') isnt 0
+          if v.indexOf(m) is 0 and v not in starts
+            starts.push v
+          else
+            if v.length-m.length > 100
+              try
+                p = v.split m
+                if p[0].length > 50
+                  p[0] = p[0].substring(0,50)
+                after = 100 - p[0].length
+                if p[1].length > after
+                  p[1] = p[1].substring(0,after)
+                v = p[0] + m + p[1]
+            if v not in suggestions
+              suggestions.push v
+    for s in suggestions
+      starts.push(s) if s not in starts
+    return starts
+
 API.add 'service/nims/count', get: () -> return API.es.count API.settings.es.index + "_nims"
 API.add 'service/nims/count/:key', get: () -> return API.es.count API.settings.es.index + "_nims", undefined, this.urlParams.key
 API.add 'service/nims/terms/:key', get: () -> return API.es.terms API.settings.es.index + "_nims", undefined, this.urlParams.key, undefined, undefined, false

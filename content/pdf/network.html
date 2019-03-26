@@ -16,7 +16,7 @@
   jQuery(document).ready(function() {
     //noddy.login();
     
-    var sz = 10;
+    var sz = 100;
 
     $.fn.holder.use.nims = {
       url: "https://dev.api.cottagelabs.com/service/nims/pdf",
@@ -26,8 +26,8 @@
       //sticky:true,
       record:false,
       size:30,
-      fields: ['keywords.exact','chemicals.exact','entities.person.value.exact',
-        'entities.organization.value.exact','entities.location.value.exact','terms._analysis_fields.exact',
+      fields: ['name.exact','keywords.exact','chemicals.exact','entities.person.value.exact',
+        'entities.organization.value.exact','entities.location.value.exact','entities.location.categorise.img.exact','terms._analysis_fields.exact',
         'terms._characterization_methods.exact','terms._data_origins.exact',
         'terms._material_types.exact','terms._properties_addressed.exact',
         'terms._structural_features.exact','terms._samurai_names.exact',
@@ -59,6 +59,10 @@
         person_categorised: { terms: { field: "entities.person.categorise.title.exact", size: sz } }
       }
     }
+
+    $.fn.holder.display.network.recordValue = 'name.exact'
+    $.fn.holder.display.network.show = ['nims_samurai_names','location_wikidata']
+    $.fn.holder.display.network.connect = ['nims_samurai_names','location_wikidata']
 
     $('#holder').holder();
 

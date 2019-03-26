@@ -3,19 +3,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-
-        <div class="jumbotron" style="background-color:#66bbff;">
-          <h1 style="color:white;font-size:54px;text-align:center;">NIMS X</h1>
-        </div>
-  
-        <div class="well">
-          <ol>
-            <li>
-              Notes to go here
-            </li>
-          </ol>
-        </div>
-
         <div id="holder">
           
         </div>
@@ -27,7 +14,98 @@
 
 <script>
   jQuery(document).ready(function() {
-    //noddy.login();
+
+    var sz = 50;
+
+    $.fn.holder.use.nims = {
+      url: "https://dev.api.cottagelabs.com/service/nims/pubman",
+      datatype: 'JSON',
+      pushstate: false,
+      display:['nims','filters'],
+      sticky:true,
+      size:10,
+      /*fields: [
+        'components',
+        'relations',
+        'resources',
+        'base',
+        'type',
+        'title',
+        'last-modification-date',
+        'creation-date',
+        'created-by',
+        'public-status',
+        'public-status-comment',
+        'context',
+        'content-model',
+        'lock-status',
+        'version',
+        'records',
+        'txts',
+        'keywords',
+        'chemicals'
+      ],*/
+      facets: {
+        Creator: { terms: { field: "created-by.title.exact", size: sz } },
+        Journal: { terms: { field: "records.publication.source.title.exact", size: sz } },
+        'Chemistry terms': { terms: { field: "chemicals.exact", size: sz } }
+      }
+    }
+
+    $.fn.holder.use.nims.record = function(rec,idx) {
+      var re = '<p style="word-wrap:break-word;padding:5px;margin-bottom:0px;';
+      if (idx && parseInt(idx) && parseInt(idx)%2 !== 0) re += 'background-color:#eee;';
+      re += '">';
+      try {
+        for ( var k in rec ) {
+          if (k === 'created-by' || k === 'context') {
+            re += '<b>' + k + '</b>: ';
+            re += $.fn.holder.defaults.link({text:rec[k].title, val:k+'.title.exact:'+rec[k].title}) // options.link({text:rec[k][i],val:k+':'+rec[k][i]+''});
+            re += '<br>';
+          } else if (k === 'version') {
+            re += '<b>' + k + '</b>: ' + rec[k].number;
+            re += '<br>';
+          } else if (k === 'records') {
+            if (rec[k].publication.length) {
+              re += '<b>Publications</b>:<br>';
+              for ( var p in rec[k].publication) {
+                var pb = rec[k].publication[p];
+                re += pb.title;
+                try {
+                  re += ', in <i>' + $.fn.holder.defaults.link({text:pb.source[0].title, val: 'records.publication.source.title.exact:'+pb.source[0].title}) + '</i>';
+                  try { re += ' vol. ' + pb.source[0].volume + ' issue. ' + pb.source[0].issue  } catch(err) {}
+                } catch(err) {}
+                try {
+                  re += '<br>'
+                  for (var c in pb.creator) {
+                    if (c !== '0') re += ', ';
+                    re += pb.creator[c].role + ': ';
+                    re += pb.creator[c].person[0]['family-name'] + ' ' + pb.creator[c].person[0]['given-name'];
+                    try { re += ' (' + pb.creator[c].person[0].organization[0].title + ')' } catch(err) {}
+                  }
+                } catch(err) {}
+                re += '<br>';
+              }
+            }
+          } else if (['href','pid','clpid','components','text','relations','resources','base','content-model','latest-version','latest-release','createdAt','created_date','_id'].indexOf(k) === -1) {
+            re += '<b>' + k + '</b>: ';
+            if (typeof rec[k] === 'string') {
+              re += $.fn.holder.defaults.link(rec[k]);
+            } else if (rec[k] instanceof Array && rec[k].length && typeof rec[k][0] === 'string') {
+              for ( var a in rec[k] ) {
+                if (a !== '0') re += ', ';
+                re += $.fn.holder.defaults.link({text:rec[k][a], val: k+'.exact:'+rec[k][a]});
+              }
+            } else {
+              re += JSON.stringify(rec[k]);
+            }
+            re += '<br>';
+          }
+        }
+      } catch(err) {}
+      re += '</p>';
+      return re;
+    }
 
     $('#holder').holder();
 

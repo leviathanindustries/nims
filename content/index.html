@@ -26,7 +26,7 @@
 <div class="strap strap-compact">
   <div class="container-fluid" style="max-width:1000px;">
     <div class="row">
-      <div class="col-md-3" style="position:sticky;top:60px;">
+      <div class="col-md-3" id="stickynav" style="position:sticky;top:60px;">
         <div class="well" style="padding:0px;">
           <ul class="nav" style="margin:0px;padding:0px;">
             <li style="border-bottom:1px solid #ddd;"><a style="padding:4px 5px 1px 15px;" href="/">Introduction</a></li>
@@ -42,6 +42,12 @@
 
             <li><a style="padding:4px 5px 1px 15px;" href="#demos">Demonstrations</a></li>
 
+            <li><a style="padding:2px 5px 1px 35px;" href="#pubman">Pubman XML</a></li>
+            <!--<li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#pubman-graph">Pubman graphs</a></li>-->
+
+            <li><a style="padding:2px 5px 1px 35px;" href="#pdf">Pubman PDF</a></li>
+            <!--<li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#pdf-entities">PDF entities</a></li>-->
+
             <li><a style="padding:2px 5px 1px 35px;" href="#dataset">Dataset</a></li>
             <!--<li><a style="padding:2px 5px 1px 55px;" href="#dataset-csv">Dataset CSV</a></li>
             <li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#dataset-graphs">Dataset graphs</a></li>-->
@@ -49,12 +55,6 @@
             <li><a style="padding:2px 5px 1px 35px;" href="#imeji">Imeji</a></li>
             <!--<li><a style="padding:2px 5px 1px 55px;" href="#imeji-tiles">Imeji tiles</a></li>
             <li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#imeji-analysis">Imeji analysis</a></li>-->
-
-            <li><a style="padding:2px 5px 1px 35px;" href="#pdf">PDF</a></li>
-            <!--<li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#pdf-entities">PDF entities</a></li>-->
-
-            <li><a style="padding:2px 5px 1px 35px;" href="#pubman">Pubman</a></li>
-            <!--<li style="border-bottom:1px solid #ddd;"><a style="padding:2px 5px 1px 55px;" href="#pubman-graph">Pubman graphs</a></li>-->
 
             <li><a style="padding:2px 5px 1px 35px;" href="#samurai">Samurai</a></li>
             <!--<li><a style="padding:2px 5px 1px 55px;" href="#samurai-network">Samurai network</a></li>
@@ -149,7 +149,7 @@
         approach to export data from Hyrax for TDM work elsewhere, in which case we should focus on making data export a
         priority in future work.</p>
 
-        <p><a target="_blank" href="https://api.nims.test.cottagelabs.com/xml">View a sample dataset XML metadat file</a></p>
+        <p><a target="_blank" href="https://api.nims.test.cottagelabs.com/xml">View a sample dataset XML metadata file</a></p>
         <p><a target="_blank" href="https://api.nims.test.cottagelabs.com/dataset?q=%22AES-narrow%22&exclude=csv">View same file after import</a></p>
 
         <p>As I had decided to import all the data to an alternative system, I also converted all the metadata to
@@ -169,7 +169,7 @@
         a parent object name "0", while the next is in "1", and so on. So these were flattened to normal lists.</p>
 
         <p><a target="_blank" href="https://samurai.nims.go.jp/profiles/kurashima_keiji.json">View a Samurai record with object with numbered keys</a></p>
-        <p><a target="_blank" href="https://api.nims.test.cottagelabs.com/samurai?q=id:\"9d61a3c8-fb55-48ca-b083-27b03ca8a80f\"">View the same record after import</a></p>
+        <p><a target="_blank" href='https://api.nims.test.cottagelabs.com/samurai?q=id:"9d61a3c8-fb55-48ca-b083-27b03ca8a80f"'>View the same record after import</a></p>
 
 
         <h3>Processing CSV</h3>
@@ -405,19 +405,48 @@
 
         <h2>Demonstrations</h2>
 
-        <a name="dataset" id="dataset"></a>
+        <a name="pubman" id="pubman"></a>
 
         <p>Each data type was given a typical faceted search interface demonstrating the ability to extract content from
         various sources and present in a standard way with a search box and dropdowns to filter to specific
         records, showing that we could successfully extract text amd find terms and entities within the source data.
         However the display of results was customised in a range of ways, from simple text records to tiling images and
         interactive graphs.</p>
+        
+        <p>(Note, many of the different demonstrations could be applied to each of the data types - I just picked the most 
+        appropriate ones for each demo rather than running them for all.)</p>
 
 
-        <a name="pubman" id="pubman"></a>
         <h3>Pubman XML</h3>
 
-        <p>TODO still in progress</p>
+        <ul>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/pubman">Pubman XML search</a></li>
+        </ul>
+
+        <p>Pubman XML data was used to build a simple faceted browse interface demonstrating the basic abilities of 
+        extracting text from the metadata, converting it to JSON, and making use of it. It includes some TDM values 
+        such as keywords and chemical tags, and gives dropdown filters for creator, journal, and chemical tag.</p>
+
+        <a name="pdf" id="pdf"></a>
+
+        <p>In this view we can also see the aforementioned issue about document-oriented vs graph/relational data 
+        for this type of work - in the first result listing under the publications, the creator roles are URLs to 
+        AUT rather thant the word "author". This can actually make it harder to extract this data in a meaninful way, 
+        without first dereferencing all such URLs.</p>
+
+
+        <h3>Pubman PDF</h3>
+
+        <ul>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/pdf/network">Pubman PDF entity network</a></li>
+        </ul>
+
+        <a name="dataset" id="dataset"></a>
+
+        <p>Here we can see the relations between Pubman article PDFs and extracted location entities. The locations were 
+        found purely by running text extraction and entity recognition on the text of the PDFs, without any metadata, and 
+        can contain or link to the full Wikidata record about the entity (as well as Google knowledge graph records). Similarly, 
+        some filters have been created using text extraction based on the Hyrax vocabulary terms.</p>
 
 
         <h3>Dataset samples</h3>
@@ -429,7 +458,11 @@
         </ul>
 
         <p>Dataset results were displayed first as a normal search results page, with many of the deeply nested values available
-        as filters, and then as graphs that can show relations within the data, such as the relation
+        as filters, and showing the names and vocabulary terms of each record. These vocabulary terms are the ones found by 
+        doing text extraction controlled by the vocabulary terms used in the project for Hyrax, so this shows they can be 
+        extracted from records regardless of whether they are provided as metadata during submission or not.</p>
+        
+        <p>Results were then displayed as graphs that help to show relations within the data, such as the relation
         between specimens and analyses. Graph parameters can be customised and adjust depending on search criteria.</p>
 
         <p>Any CSV found in dataset ZIPs were extracted, values mapped onto an x,y plane and visualised as a line graph.
@@ -442,16 +475,6 @@
         map directly onto each other, and the filename filter shows that these are from 2 different files in the same dataset.
         This gives an easy way to verify where result sets are expected to be similar, or to see where they should be
         different but are not.</p>
-
-
-        <a name="pdf" id="pdf"></a>
-        <h3>Pubman PDF</h3>
-
-        <ul>
-          <li><a target="_blank" href="https://nims.test.cottagelabs.com/pubman/entities.html">Pubman PDF entity search</a></li>
-        </ul>
-
-        <p>TODO still in progress, will show the extracted entities and links out to wikidata etc</p>
 
 
         <h3>Imeji</h3>
@@ -474,18 +497,17 @@
         <p>Selecting image analysis provides a page demonstrating some more extracted image data such as orientation, lightness/darkness,
         average shade, main colours, and a bounding box showing the key area of interest. (Note this does not yet work for the animated images.)</p>
 
+        <a name="samurai" id="samurai"></a>
+
         <p>Average and main colours are calculated using k-means clustering algorithm. The bounding box is calculated by a recursive
         algorithm comparing information about the variation of colours and intensity across the image, seeking the area that stands out the most.</p>
 
 
-        <a name="samurai" id="samurai"></a>
-
         <h3>Samurai</h3>
 
         <ul>
-          <!--<li><a target="_blank" href="https://nims.test.cottagelabs.com/samurai">Samurai search</a></li>-->
-          <li><a target="_blank" href="https://nims.test.cottagelabs.com/samurai/sankey">Samurai sankey</a></li>
           <li><a target="_blank" href="https://nims.test.cottagelabs.com/samurai/network">Samurai network</a></li>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/samurai/sankey">Samurai sankey</a></li>
         </ul>
 
         <p>This Samurai network graph demonstrates how we can use data visualisation to learn about interesting aspects of data that
@@ -502,19 +524,25 @@
         <p>Note there are 832 researchers in total, it is possible to show them all on screen at once, but the visualisation may become
         slow, depending on the power of your machine. To try this, type options.query.size:832 into the search bar and hit enter...</p>
 
-        <p>TODO try to finish a samurai inverse query vis.</p>
+        <p>It is notable how many links there are in this graph. NIMS researchers appear to be highly collaborative between research groups.</p>
 
         <a name="search" id="search"></a>
-
-        <p>It is notable how many links there are in this graph. NIMS researchers appear to be highly collaborative between research groups.</p>
+        
+        <p>The sankey visualisation gives another example of visualising complex relations between entities in the data.</p>
 
 
         <h3>Advanced search / suggest</h3>
 
+        <ul>
+          <li><a target="_blank" href="https://nims.test.cottagelabs.com/search">Search suggester</a></li>
+        </ul>
+
         <a name="future" id="future"></a>
 
-        <p>TODO still in progress</p>
-
+        <p>With extracted values and a powerful query interface we can provide advanced search features such as 
+        auto-completion and suggestion as the user types. This demonstration searches across all of the data imported 
+        so far and returns suggestions based on the typed input. This could be extended to filter based on certain 
+        fields, or could be used as a dropdown controller for form submissions.</p>
 
 
         <h2>Future work</h2>
@@ -557,7 +585,7 @@
 
 <script>
   jQuery(document).ready(function() {
-
+    if ($(window).width() < 992) $('#stickynav').css({'position':'relative','margin-bottom':'100px'});
   });
 </script>
 
